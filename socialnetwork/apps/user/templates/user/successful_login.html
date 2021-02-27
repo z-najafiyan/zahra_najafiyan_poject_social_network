@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+    <h4>Welcome to website </h4>
+    <button onclick="location.href='{% url 'nem_post' %}'" >New Post</button>
+    <button onclick="location.href='{% url 'profile' user.id %}'">Profile</button>
+    </div>
+{% endblock %}
