@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load custom_tag_account %}
+{% block content %}
+    <div>
+        <form action="{% url 'search_result' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Search">
+            <ul>
+                {% for i in data %}
+                    <li><a href="{% url 'profile' i.pk %}">{{ i.email }}</a></li>
+                {% endfor %}
+            </ul>
+        </form>
+{% user_list %}
+    </div>
+{% endblock %}

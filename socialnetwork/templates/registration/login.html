@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content0 %}Login{% endblock %}
+{% block content %}
+<form method="post" action="">
+  {% csrf_token %}
+  {{ form.as_table }}
+  <button type="submit">LogIn</button>
+</form>
+{% if messages %}
+    {% for message in messages %}
+    <button onclick="alert({{ message }})"></button>
+    {% endfor %}
+{% endif %}
+{% endblock %}
