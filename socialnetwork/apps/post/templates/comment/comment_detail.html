@@ -1,8 +1,0 @@
-<ul>
-    {% for i in comment %}
-    <li>author:{{ i.user }}</li>
-        <li>text:{{ i.comment }}</li>
-/        <button onclick="location.href='{% url 'delete_comment' i.id %}'">delete_comment</button>
-{#        {% endif %}#}
-    {% endfor %}
-</ul>
