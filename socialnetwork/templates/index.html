@@ -1,0 +1,37 @@
+{% load custom_tag_post %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="zahra najafiyan">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>index</title>
+</head>
+<body class="margin_padding">
+<main>
+    <div>
+        {% if user.is_authenticated %}
+            <ul>
+                {% for post in posts %}
+                    <li>{{ post.author__first_name }} {{ author__last_name }}</li>
+                    {% if post.picture != None %}
+                        <li>{{ post.picture }}</li>
+                    {% endif %}
+                    {% if post.content != None %}
+                        <li>{{ post.content }}</li>
+                    {% endif %}
+                    {{ post.lifetime }}
+                {% endfor %}
+                <li>like:{% count_like post.pk %}</li>
+            </ul>
+        {% endif %}
+        {% if not user.is_authenticated %}
+            <button onclick="location.href='{% url 'user_sing_up' %}'">Sing Up</button>
+            <button onclick="location.href='{% url 'login' %}'">Sing In</button>
+        {% endif %}
+    </div>
+</main>
+</body>
+</html>

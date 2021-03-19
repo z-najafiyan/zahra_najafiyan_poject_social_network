@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block aside_content %}
+    <ul>
+    <li><a href="{% url 'profile' user.id %}">profile</a></li>
+    <li><a href="{% url "detail_post" user.id slug %}">detail_post</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+</form>
+{% endblock %}

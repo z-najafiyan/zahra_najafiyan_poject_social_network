@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load custom_tag_account %}
+{% block content %}
+    <div>
+        {% if profile.photo_profile != None %}
+            <img src='/image/{{ profile.photo_profile }}/' style="height:20%;width:15%;">
+        {% endif %}
+        <h4>{{ profile.first_name }} {{ profile.last_name }}</h4>
+        <ul>
+            {% if profile.bio != None %}
+
+                <li>{{ profile.bio }}</li>
+            {% endif %}
+            {% if profile.website != None %}
+
+                <li>{{ profile.website }}</li>
+            {% endif %}
+        </ul>
+        <p><a href="{% url 'followers_list' profile.id %}">followers</a>:{% count_followers profile.id %}</p>
+        <p><a href="{% url 'following_list' profile.id %}">following</a>:{% count_following profile.id %}</p>
+        <button onclick="{% send_request_follow user.id profile.id %}">follow</button>
+        {% if user.id == profile.id %}
+            <button onclick="window.location.href='{% url 'complete_profile' user.id %}'">Complete Profile</button>
+            <a href="{% url 'request' %}">request follow</a>
+
+        {% endif %}
+        <p>{{ message }}</p>
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content0 %}Sing Up{% endblock %}
+{% block content %}
+    <div>
+        </form>
+        <form method="post" action="">
+            {% csrf_token %}
+            <table>{{ form.as_table }}</table>
+            <input type="submit" value="Save">
+        </form>
+
+    </div>
+{% endblock %}
