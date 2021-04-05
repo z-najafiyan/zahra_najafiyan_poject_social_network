@@ -6,34 +6,36 @@ from django.db.models import Q
 class UserManagers(BaseUserManager):
     use_in_migrations = True
 
-    def _create_user(self, email, password, **extra_fields):
-        if not email:
-            raise ValueError('The given email must be set')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+    def _create_user(self, user_name, password, **extra_fields):
+        if not user_name:
+            raise ValueError('The given email or phone number must be set')
+        if user_name.find("@") != -1:
+            user_name = self.normalize_email(user_name)
+        user = self.model(user_name=user_name, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, user_name, password=None, **extra_fields):
         extra_fields.setdefault('is_superuser', False)
         extra_fields.setdefault('is_staff', False)
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(user_name, password, **extra_fields)
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, user_name, password, **extra_fields):
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_staff', True)
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(user_name, password, **extra_fields)
 
 
 class FollowManagers(models.Manager):
     def following(self, pk):
-        following = [i['following__email'] for i in
-                     self.filter(user=pk).values('following__email').distinct()]
+        following = [i['following__first_name'] + " " + i['following__last_name'] for i in
+                     self.filter(user=pk).values('following__last_name', 'following__first_name').distinct()]
         return following
 
     def followers(self, pk):
-        followers = [i['user__email'] for i in self.filter(following__in=[pk]).values('user__email')]
+        followers = [i['user__first_name'] + " " + i['user__last_name'] for i in
+                     self.filter(following__in=[pk]).values('user__first_name', 'user__last_name')]
         return followers
 
 
@@ -45,8 +47,8 @@ class RequestManagers(models.Manager):
         :param pk_other_user:
         :return: message
         """
-        from apps.account.models import Follow
-        from apps.account.models import User
+        from socialnetwork.apps.account.models import Follow
+        from socialnetwork.apps.account.models import User
         login_user = User.objects.get(pk=pk_user_login)
         other_user = User.objects.get(pk=pk_other_user)
 
@@ -66,8 +68,8 @@ class RequestManagers(models.Manager):
             return message
 
     def accept_request(self, pk_user_login, pk_other_user):
-        from apps.account.models import User
-        from apps.account.models import Follow
+        from socialnetwork.apps.account.models import User
+        from socialnetwork.apps.account.models import Follow
         login_user = User.objects.get(pk=pk_user_login)
         other_user = User.objects.get(pk=pk_other_user)
         request = self.filter(Q(request_user=pk_user_login) & Q(request_follow=pk_other_user))

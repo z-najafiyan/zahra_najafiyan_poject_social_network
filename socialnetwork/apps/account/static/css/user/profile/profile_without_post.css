@@ -1,0 +1,44 @@
+.img_profile {
+    border-radius: 50%;
+    width: 20%;
+}
+
+.ul_profile {
+    list-style: none;
+    margin-top: 3%;
+    margin-left: 23%;
+}
+
+.background-color {
+    background-color: rgba(244, 255, 201, 0.3);
+}
+
+.title_name {
+    color: #1F3847;
+    display: inline-block;
+    margin-left: 7%;
+}
+
+.btn-primary {
+    background-color: rgba(26, 47, 56, 0.1);
+    border: 1px solid #FBBc0e;
+    width: 11rem;
+    height: 3rem;
+    color: #1F3847;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to bottom, #f8d063, #FBBc0e);
+    color: #1F3847;
+    border: 1px solid #FBBc0e;
+    text-align: center;
+
+}
+
+.a_link {
+    text-decoration-line: none;
+    display: inline-grid;
+    color: #1F3847;
+
+}

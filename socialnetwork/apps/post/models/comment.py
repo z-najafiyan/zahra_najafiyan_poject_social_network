@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.post.maneger import CommentManager
+from socialnetwork.apps.post.maneger import CommentManager
 
 
 class Comment(models.Model):
@@ -10,4 +10,4 @@ class Comment(models.Model):
     comment = models.TextField()
     objects=CommentManager()
     def __str__(self):
-        return "user: {} ,post: {} ,comment:{}".format(self.user, self.post, self.comment)
+        return "pk:{} user: {} ,post: {} ,comment:{}".format(self.pk,self.user, self.post, self.comment)

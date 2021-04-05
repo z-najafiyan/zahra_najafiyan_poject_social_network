@@ -3,17 +3,23 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from apps.account.managers import UserManagers
+from socialnetwork.apps.account.managers import UserManagers
+from socialnetwork.common.validators import user_name_validator, name_validation
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     CHOICE_GENDER = [('0', 'Prefer Not To Say'), ('1', "Female"), ('2', 'Male')]
 
-    first_name = models.CharField('First Name', blank=True, null=True, max_length=30)
-    last_name = models.CharField('Last Name', blank=True, null=True, max_length=30)
-    email = models.EmailField('Address Email', unique=True)
+    first_name = models.CharField('First Name', max_length=30, validators=[name_validation])
+    last_name = models.CharField('Last Name', max_length=30, validators=[name_validation])
+    email = models.EmailField('Address Email', unique=True, null=True, blank=True)
+    phone_number = models.CharField('Phone Numbers', unique=True, null=True, blank=True, max_length=11)
+    token_sms = models.CharField(null=True, blank=True, max_length=6)
+    user_name = models.CharField('Email or phone number', unique=True, max_length=50,
+                                 validators=[user_name_validator])
     photo_profile = models.ImageField('Photo Profile', upload_to='profile/%y/%m/%d/', blank=True, null=True)
-    gender = models.CharField("Gender", blank=True, null=True, max_length=1, choices=CHOICE_GENDER, default='0')
+    gender = models.CharField("Gender", blank=True, null=True, max_length=1, choices=CHOICE_GENDER,
+                              default='0')
     bio = models.TextField("Bio", blank=True, null=True)
     website = models.URLField('Address Website', blank=True, null=True)
     follow = models.ManyToManyField('account.User', related_name='following',
@@ -25,7 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(_('staff'), default=False)
     objects = UserManagers()
     REQUIRED_FIELDS = []
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'user_name'
 
     class Meta:
         verbose_name = _('User')
@@ -41,3 +47,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return str(self.email)
+
+    def save(self, *args, **kwargs):
+        if self.user_name.find('@') == -1:
+            self.phone_number = self.user_name
+        else:
+            self.email = self.user_name
+        super().save(*args, **kwargs)

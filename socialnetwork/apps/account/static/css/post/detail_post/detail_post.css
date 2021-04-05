@@ -1,0 +1,28 @@
+.background_card {
+    background-color: rgba(244, 255, 201, 0.3);
+    height: auto;
+}
+.btn-primary {
+    background-color: rgba(26, 47, 56, 0.1);
+    border: 1px solid #FBBc0e;
+    color: white;
+
+
+}
+.positions_btn{
+    position: absolute;
+    bottom: 0;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to bottom, #f8d063, #FBBc0e);
+    color: white;
+    border: 1px solid #FBBc0e;
+}
+
+.ul_post{
+    list-style: none;
+}
+.initial{
+    display: initial;
+}

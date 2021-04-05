@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.account.managers import FollowManagers
+from socialnetwork.apps.account.managers import FollowManagers
 
 
 class Follow(models.Model):

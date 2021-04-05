@@ -1,7 +1,140 @@
-{% extends 'base.html' %}
-{% load custom_tag_account %}
-{% block content %}
-    <div>
+{% load static %}
+{% load custom_tag_post %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="zahra najafiyan">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    </div>
-{% endblock %}
+
+    <title>index</title>
+</head>
+<body class="margin_padding">
+{% if user.is_authenticated %}
+    <main class="margin_padding ">
+        <link rel="stylesheet" type="text/css" href='{% static 'vendor/bootstrap/css/bootstrap.min.css' %}'>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/index/index_login.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base/style.css' %}">
+        <nav style="width: 100%;" class="navbar navbar-expand-lg navbar-light bg-light">
+            <img src="{% static "images/page/logo1.jpg" %}" width="100" height="100"
+                 class="logo d-inline-block align-top">
+            <a class="link-header navbar-brand" style="color: #1F3847" href="#">Gasedak</a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ul_nav">
+                    <li class="li_nav nav-item active  li_post">
+                        <a class="nav-link" style="color: #1F3847" href="{% url "new_post" %}">NewPost</a>
+                    </li>
+                    <li class="li_nav nav-item li_post"><a class="nav-link" style="color: #1F3847"
+                                                           href="{% url "profile" user.id %}">profile</a></li>
+                    <li class="li_nav nav-item li_post"><a class="nav-link" style="color: #1F3847"
+                                                           href="{% url 'complete_profile' user.id %}">CompleteProfile</a>
+                    </li>
+                    <li class="li_nav nav-item li_post"><a class="nav-link" style="color: #1F3847"
+                                                           href="{% url 'logout' %}">Signout</a>
+                    </li>
+                    <li class="li_nav nav-item li_post">
+                        <a class="nav-link" href="{% url "search_result" %}">
+                            <figure class="icon-search"></figure>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="card background_card">
+            <div class="card-body">
+                {% if user.photo_profile == '' %}
+                    <img class="card-img img_profile"
+                         src="{% static "images/page/user_profile.png" %}">
+                {% else %}
+                    <img src='{{ MEDIA_URL }}{{ user.photo_profile }}' class="card-img img_profile">
+                {% endif %}
+                <p class="card-text" style="padding-left:3% ">{{ user.first_name }} {{ user.last_name }}</p>
+
+                <ul class="ul_post">
+                    {% for post in page_obj %}
+                        {% if profile.photo_profile == '' %}
+                            <img class="card-img img_profile"
+                                 src="{% static "images/page/user_profile.png" %}">
+                        {% else %}
+                            <img src='{{ MEDIA_URL }}{{ post.author.photo_profile }}' class="card-img img_profile">
+
+                        {% endif %}
+
+                        <li class="card-text">{{ post.author.first_name }} {{ post.author.last_name }}</li>
+                        <li class="card-text"><h4>{{ post.title }}</h4></li>
+                        {% if post.picture %}
+                            <li class="card-text"><img src="{{ MEDIA_URL }}{{ post.picture }}"
+                                                       class="img_post"></li>
+                        {% endif %}
+                        {% if post.content %}
+                            <li class="card-text">content :{{ post.content }}</li>
+                        {% endif %}
+                        <li class="card-text">like:{% count_like post.pk %}</li>
+                        <button class="btn btn-primary"
+                                onclick="location.href='{% url 'like_post1' post.slug %}'">
+                            like
+                        </button>
+                        <li><a href="{% url 'detail_post' post.author_id post.slug %}">comment and like</a></li>
+                        <br><br>
+                        <hr>
+                    {% endfor %}
+                </ul>
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">&laquo; first</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                               tabindex="-1">Previous</a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        </section>
+
+        <footer>
+
+        </footer>
+        <script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+
+    </main>
+{% else %}
+    <main class="margin_padding">
+        <link rel="stylesheet" type="text/css" href='{% static 'vendor/bootstrap/css/bootstrap.min.css' %}'>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/index/index_logout.css' %}">
+        <img class="img-background" src="{% static 'images/page/background1.jpg' %}">
+        <div class=" card box positions" style="width:35rem ">
+            <div class="d-flex flex-column bd-highlight card-body">
+                <div class="center">
+                    <img class=" card-img  logo mt-3" src="{% static "images/page/logo1.jpg" %}">
+                </div>
+                <h1 class="card-title title center">Gasedak</h1>
+                <div class=" center card-text">
+                    <button class="btn" onclick="location.href='{% url 'user_sign_up' %}'">Sign Up</button>
+                    <button class="btn" onclick="location.href='{% url 'SignIn' %}'">Sign In</button>
+                </div>
+            </div>
+        </div>
+        <script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+
+    </main>
+{% endif %}
+</body>
+</html>

@@ -1,15 +1,13 @@
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import UpdateView, DeleteView, ListView
+from django.views.generic import UpdateView
 
-from apps.account.models import User
-from apps.post.forms import NewPostForm, CommentForm
-from apps.post.models import Post, Comment
+from socialnetwork.apps.account.models import User
+from socialnetwork.apps.post.forms import NewPostForm, CommentForm
+from socialnetwork.apps.post.models import Post, Comment
 
 
 class NewPost(LoginRequiredMixin, View):
@@ -29,8 +27,9 @@ class NewPost(LoginRequiredMixin, View):
         if form.is_valid():
             data = form.cleaned_data
             post = Post(title=data['title'], created_on=data['created_on'], content=data["content"],
-                        author=User.objects.get(pk=author.id), updated_on=data['updated_on'], status=data['status'],
+                        author=User.objects.get(pk=author.id),
                         picture=data['picture'])
+
             post.save()
 
             return render(request, 'post/new_post_form.html',
@@ -85,24 +84,59 @@ class DetailPostAuthor(LoginRequiredMixin, View):
 class UpdatePost(UpdateView):
     model = Post
     template_name = 'post/edit_post.html'
-    fields = ['title', 'content', 'updated_on', 'status', 'picture']
-    success_url = 'profile'
+    fields = ['title', 'content', 'updated_on', 'picture']
+
+    def get_success_url(self):
+        return reverse_lazy("profile", kwargs={"other_user_pk": self.request.user.pk})
 
 
 class DeletePost(View):
     def get(self, request, slug):
         Post.objects.filter(slug=slug).delete()
-        user = request.user.id
-        return redirect('ok')
-        # return reverse('profile',args=user)
+        return HttpResponseRedirect(reverse("profile", kwargs={"other_user_pk": self.request.user.pk}))
 
 
 class DeleteComment(View):
-    def get(self, request,pk):
+    def get(self, request, pk):
         user = request.user.id
-        result=Comment.objects.delete_comment(comment_pk=pk,login_user_pk=user)
+        slug = Comment.objects.get(pk=pk).post
+        result = Comment.objects.delete_comment(comment_pk=pk, login_user_pk=user)
         if result:
-            return  redirect('ok')
+            # return redirect('ok')
+            # return reverse('detail_post', kwargs={"other_user_pk":self.request.user.pk,"slug":slug})
+            return HttpResponseRedirect(
+                reverse('detail_post', args=(self.request.user.pk, slug)))
         else:
             return redirect("404")
 
+
+class LikePost(View):
+    def get(self, request, slug):
+        """
+        like post
+        input: slug post, id user
+
+        """
+        post = Post.objects.get(slug=slug)
+        author = post.author_id
+        user = User.objects.get(pk=request.user.id)
+        like_user = Post.objects.filter(slug=slug).filter(like__user=user.id)
+        if not like_user.exists():
+            post.like.add(user)
+        return HttpResponseRedirect(
+            reverse('detail_post', args=(author, slug)))
+
+
+class LikePost1(View):
+    def get(self, request, slug):
+        """
+        like post
+        input: slug post, id user
+
+        """
+        post = Post.objects.get(slug=slug)
+        user = User.objects.get(pk=request.user.id)
+        like_user = Post.objects.filter(slug=slug).filter(like__user=user.id)
+        if not like_user.exists():
+            post.like.add(user)
+        return HttpResponseRedirect(reverse('home'))

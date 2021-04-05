@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.account.managers import  RequestManagers
+from socialnetwork.apps.account.managers import  RequestManagers
 
 
 class RequestFollow(models.Model):

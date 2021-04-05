@@ -1,7 +1,7 @@
 from django import template
 
-from apps.account.models import User, Follow, RequestFollow
-from apps.post.models import Post
+from socialnetwork.apps.account.models import User, Follow, RequestFollow
+from socialnetwork.apps.post.models import Post
 
 register = template.Library()
 
@@ -13,26 +13,26 @@ def user_list():
     return {"users": users}
 
 
-@register.inclusion_tag('user/following_post_list.html')
-def following_post_list(pk):
-    """show user following
-     input:pk user
-     output: list following
-     """
-    following = Follow.objects.following(pk)
-    posts = Post.objects.filter(author__email__in=following).values('title', 'author__email')
-    return {'posts': posts}
+# @register.inclusion_tag('user/following_post_list.html')
+# def following_post_list(pk):
+#     """show user following
+#      input:pk user
+#      output: list following
+#      """
+#     following = Follow.objects.following(pk)
+#     posts = Post.objects.filter(author__email__in=following).values('title', 'author__email')
+#     return {'posts': posts}
 
 
-@register.simple_tag()
-def send_request_follow(pk_login_user, pk_other_user):
-    """
-    Follow the user
-    :param pk_login_user:
-    :param pk_other_user:
-    :return: message
-    """
-    return RequestFollow.objects.request_following_user(pk_login_user, pk_other_user)
+# @register.simple_tag()
+# def send_request_follow(pk_login_user, pk_other_user):
+#     """
+#     Follow the user
+#     :param pk_login_user:
+#     :param pk_other_user:
+#     :return: message
+#     """
+#     return RequestFollow.objects.request_following_user(pk_login_user, pk_other_user)
 
 
 @register.simple_tag()

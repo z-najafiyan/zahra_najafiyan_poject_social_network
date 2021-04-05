@@ -1,8 +1,13 @@
 <ul>
     {% for i in comment %}
-    <li>author:{{ i.user }}</li>
+        <li>author:{{ i.user }}</li>
         <li>text:{{ i.comment }}</li>
-/        <button onclick="location.href='{% url 'delete_comment' i.id %}'">delete_comment</button>
-{#        {% endif %}#}
+
+{#        {% if author_post == user_login %}#}
+{#            <button class="btn btn-primary"  onclick="location.href='{% url 'delete_comment' i.id %}'">delete_comment</button>#}
+        {{ i.id }}
+        {% if i.user == user_login %}
+            <button class="btn btn-primary" onclick="location.href='{% url 'delete_comment' i.id %}'">delete_comment</button>
+        {% endif %}
     {% endfor %}
 </ul>

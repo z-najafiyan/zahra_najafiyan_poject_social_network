@@ -1,29 +1,81 @@
 {% extends 'base.html' %}
 {% load custom_tag_account %}
-{% block content %}
-    <div>
-        {% if profile.photo_profile != None %}
-            <img src='/image/{{ profile.photo_profile }}/' style="height:20%;width:15%;">
-        {% endif %}
-        <h4>{{ profile.first_name }} {{ profile.last_name }}</h4>
-        <ul>
-            {% if profile.bio != None %}
-
-                <li>{{ profile.bio }}</li>
-            {% endif %}
-            {% if profile.website != None %}
-
-                <li>{{ profile.website }}</li>
-            {% endif %}
+{% load static %}
+{% block content0 %} Profile {% endblock %}
+{% block header_content %}
+    <img src="{% static "images/page/logo1.jpg" %}" width="100" height="100"
+         class="logo d-inline-block align-top">
+    <a class="link-header navbar-brand" style="color: #1F3847" href="#">Gasedak</a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav" style="margin-left: 20%;">
+            <li class="li_nav nav-item active pe-5">
+                <a class="nav-link" style="color: #1F3847;" href="{% url "new_post" %}">NewPost</a>
+            </li>
+            <li class="li_nav nav-item pe-5 ">
+                <a class="nav-link" style="color: #1F3847" href="{% url "home" %}">Home</a>
+            </li>
+            <li class="li_nav nav-item pe-5 ">
+                <a class="nav-link" href="{% url "search_result" %}">
+                    <figure class="icon-search"></figure>
+                </a>
+            </li>
         </ul>
-        <p><a href="{% url 'followers_list' profile.id %}">followers</a>:{% count_followers profile.id %}</p>
-        <p><a href="{% url 'following_list' profile.id %}">following</a>:{% count_following profile.id %}</p>
-        <button onclick="{% send_request_follow user.id profile.id %}">follow</button>
-        {% if user.id == profile.id %}
-            <button onclick="window.location.href='{% url 'complete_profile' user.id %}'">Complete Profile</button>
-            <a href="{% url 'request' %}">request follow</a>
+    </div>
+{% endblock %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href='{% static 'css/user/profile/profile_without_post.css' %}'>
+    <div class="card background-color">
+        <div class="card-body" style=" margin: 3% 10% 3% 10%;">
+            {% if user.photo_profile == '' %}
+                <img class="img_profile card-img"
+                     src="{% static "images/page/user_profile.png" %}">
+            {% else %}
+                <img src='{{ MEDIA_URL }}{{ user.photo_profile }}' class="img_profile card-img">
+            {% endif %}
+            <h4 class="card-title title_name"> {{ profile.first_name }} {{ profile.last_name }}</h4>
+            <ul class="ul_profile">
+                {% if profile.bio != '' %}
+                    {% if profile.bio != None %}
+                        <li class="card-text" style="color: #1F3847">{{ profile.bio }}</li>
+                    {% endif %}
+                {% endif %}
+                {% if profile.website != '' %}
+                    {% if profile.website != None %}
+                        <li class="card-text" style="color: #1F3847">{{ profile.website }} </li>
+                    {% endif %}
+                {% endif %}
+                <li><a class="card-link a_link"
+                       href="{% url 'followers_list' profile.id %}">followers</a>:{% count_followers profile.id %}
+                </li>
+                <li><a class="card-link a_link"
+                       href="{% url 'following_list' profile.id %}">following</a>:{% count_following profile.id %}
+                </li>
+                <div style="display:inline-flex ;">
+                    {% if user.id == profile.id %}
+                        <li>
+                            <a class="btn btn-primary "
+                               href="{% url 'complete_profile' user.id %}">
+                                Complete Profile
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if user.id == profile.id %}
+                        <li><a class="btn btn-primary "
+                               style="  display: table; margin-left: auto;margin-right: auto;"
+                               href="{% url 'request' %}">request follow</a></li>
+                    {% endif %}
+                    <li>
+                        {% if user.id != profile.id %}
+                            <a class="btn btn-primary" href="{% url 'send_request_follow' profile.id %}">follow
+                            </a>
+                        {% endif %}
+                    </li>
+                </div>
+            </ul>
+                <p style="font-weight: bold ;font-size: x-large"> Number of posts posted : 0</p>
 
-        {% endif %}
-        <p>{{ message }}</p>
+            <hr>
+            <p style="color: #1F3847">{{ message }}</p>
+        </div>
     </div>
 {% endblock %}

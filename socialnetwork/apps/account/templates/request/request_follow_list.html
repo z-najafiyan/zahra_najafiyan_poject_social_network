@@ -1,12 +1,65 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load custom_tag_account %}
+{% block content0 %} Request {% endblock %}
+{% block header_content %}
+    <img src="{% static "images/page/logo1.jpg" %}" width="100" height="100"
+         class="logo d-inline-block align-top">
+    <a class="link-header navbar-brand" style="color: #1F3847" href="#">Gasedak</a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav" style="margin-left: 20%;">
+            <li class="li_nav nav-item active pe-5">
+                <a class="nav-link" style="color: #1F3847;" href="{% url "new_post" %}">NewPost</a>
+            </li>
+            <li class="li_nav nav-item pe-5">
+                <a class="nav-link" style="color: #1F3847" href="{% url "home" %}">Home</a>
+            </li>
+            {#            <li class="li_nav nav-item pe-5">#}
+            {#                <a class="nav-link" style="color: #1F3847" href="{% url 'followers_list' other_user_pk %}">Followers</a>#}
+            {#            </li>#}
+            {#            <li class="li_nav nav-item pe-5">#}
+            {#                <a class="nav-link" style="color: #1F3847" href="{% url 'following_list' other_user_pk %}">Following</a>#}
+            {#            </li>#}
+            <li class="li_nav nav-item pe-5">
+                <a class="nav-link" href="{% url "search_result" %}">
+                    <figure class="icon-search"></figure>
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
 {% block content %}
-    <ul>
-        {% for applicant in request_follow %}
-            <li>{{ applicant.request_follow__email }}</li>
-            <button onclick="window.location.href='{% url 'accept_request' applicant.request_follow %}'">Confirm
-            </button>
-            <button onclick="window.location.href='{% url 'delete_request' applicant.request_follow %}'">delete</button>
-        {% endfor %}
-    </ul>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/post/new_post/new_post.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user/profile/request.css' %}">
+    <div class="card background-color">
+        <div class=" d-flex justify-content-around card-body" style=" margin: 3% 10% 3% 10%;">
+            <div>
+                <ul class="ul_list">
+                    {% for applicant in request_follow %}
+                        {% if  applicant.request_follow__photo_profile == '' %}
+                            <img class="card-img img_profile"
+                                 src="{% static "images/page/user_profile.png" %}">
+                        {% else %}
+                            <img src='{{ MEDIA_URL }}{{ applicant.request_follow__photo_profile }}'
+                                 class="card-img img_profile">
+
+                        {% endif %}
+                        <li class="initial">{{ applicant.request_follow__first_name }} {{ applicant.request_follow__last_name }}</li>
+
+                        <li class="initial"><button class="btn btn-outline-primary "
+                                onclick="window.location.href='{% url 'accept_request' applicant.request_follow %}'">
+                            Confirm
+                        </button>
+                        <button class="btn-outline-primary btn me-0"
+                                onclick="window.location.href='{% url 'delete_request' applicant.request_follow %}'">
+                            delete
+                        </button></li>
+                        <hr>
+                    {% endfor %}
+                </ul>
+            </div>
+            <img width="50%" class="ms-5" src="{% static "images/page/accepte.svg" %}">
+
+        </div>
+    </div>
 {% endblock %}

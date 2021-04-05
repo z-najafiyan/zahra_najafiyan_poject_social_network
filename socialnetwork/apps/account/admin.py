@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
-from apps.account.models import User, Follow
+# sign up your models here.
+from socialnetwork.apps.account.models import User, Follow
 
 
 @admin.register(Follow)

@@ -18,23 +18,24 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
-from apps.account import views
-from apps.account.views import CompleteProfile
+from socialnetwork.apps.account.views import SignIn, SignUp, change_password, ActivateView, CheckActivationCode, \
+    logout_view, HomePage, EditCompleteUser
 from socialnetwork import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', HomePage.as_view(), name="home"),
+    path('admin/', admin.site.urls), path('SignUp/', SignUp.as_view(), name='user_sign_up'),
+    path('activate/<uidb64>/<token>/', ActivateView.as_view(), name='activate'),
+    path('activate_sms/<int:pk>/', CheckActivationCode.as_view(), name='activate_sms'),
+    path('SignIn/', SignIn.as_view(), name="SignIn"),
+    path('logout/', logout_view, name='logout'),
     path('', include('django.contrib.auth.urls')),
     path('user/', include('apps.account.urls')),
     path('post/', include('apps.post.urls')),
     path('404/', TemplateView.as_view(template_name='404.html'), name='404'),
-    path('', TemplateView.as_view(template_name='index.html'), name="home"),
     path('ok/', TemplateView.as_view(template_name='ok.html'), name="ok"),
-    path('complete_edit/<int:pk>/', CompleteProfile.as_view(), name='complete_profile'),
-    path(r'^password/$', views.change_password, name='change_password'),
-
-
+    path('complete_edit/<int:pk>/', EditCompleteUser.as_view(), name='complete_profile'),
+    path(r'^password/$', change_password, name='change_password'),
 ]
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

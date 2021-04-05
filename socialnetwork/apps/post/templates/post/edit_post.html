@@ -1,7 +1,64 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load static %}{% block content0 %} Update Post {% endblock %}
+{% block header_content %}
+    <img src="{% static "images/page/logo1.jpg" %}" width="100" height="100"
+         class="logo d-inline-block align-top">
+    <a class="link-header navbar-brand" style="color: #1F3847" href="#">Gasedak</a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav" style="margin-left: 20%;">
+            <li class="li_nav nav-item active pe-5">
+                <a class="nav-link " style="color: #1F3847;" href="{% url "new_post" %}">NewPost</a>
+            </li>
+            <li class="li_nav nav-item pe-5  ">
+                <a class="nav-link" style="color: #1F3847" href="{% url "home" %}">Home</a>
+            </li>
+            <li class="li_nav nav-item pe-5 ">
+                <a class="nav-link" href="{% url "search_result" %}">
+                    <figure class="icon-search"></figure>
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
 {% block content %}
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update">
-</form>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/post/new_post/new_post.css' %}">
+    <link rel="stylesheet" type="text/css" href='{% static 'css/post/detail_post/detail_post.css' %}'>
+
+    <div class="card background-color">
+        <div class=" d-flex justify-content-around card-body" style=" margin: 3% 10% 3% 10%;">
+{#            <div class="container positions">#}
+{#                <div class="row">#}
+{#                    <div class="col-12 col-sm-12 col-md-6 flex-grow-1">#}
+                        <div class="container">
+                            <form method="post" action="" enctype="multipart/form-data"
+                                  class="div_form box ps-2 pe-2 row-cols-1">
+                                {% csrf_token %}
+                                <h1 class="title" style="color: #1F3847"> Update Post</h1>
+                                <div class=" form-floating row mb-3 mt-3">
+                                    {% render_field form.title type="text" id="title_input" class="form-control input_class" placeholder="title:" %}
+                                                                    <label for="title_input"> title:</label>
+                                </div>
+                                <div class="form-floating row mb-3">
+                                    {% render_field form.content style="color: #1F3847" type="text" id="content_input" class="form-control input_class" placeholder="text" %}
+                                    <label style="color: #1F3847" for="content_input">content:</label>
+                                </div>
+                                <div class="form-floating row mb-3">
+                                    {% render_field form.updated_on style="color: #1F3847" type="datetime" id="updated_on_input" class="form-control input_class" placeholder="updated on" %}
+                                    <label for="updated_on_input" style="color: #1F3847">updated_on:</label>
+                                </div>
+                                <div>
+                                    {% render_field form.picture type="file" id="picture" class="form-control input_class " placeholder="picture" %}
+                                    <br><input type="submit" VALUE=" Update" class="btn btn-outline-primary mb-3"><input
+                                        type="reset" class="btn btn-outline-primary mb-3" VALUE="Reset">
+                                </div>
+                            </form>
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+            </div>
+            <img width="40%" src="{% static "images/page/Updates_post.svg" %}">
+        </div>
+    </div>
 {% endblock %}

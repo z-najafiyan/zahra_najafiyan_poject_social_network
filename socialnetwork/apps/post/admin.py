@@ -1,5 +1,5 @@
 # Register your models here.
-from apps.post.models import Post
+from socialnetwork.apps.post.models import Post
 from django.contrib import admin
 
 

@@ -1,38 +1,26 @@
-{% load static%}
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="background">
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="zahra najafiyan">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'base/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base/style.css' %}">
+    <link rel="stylesheet" type="text/css" href='{% static 'vendor/bootstrap/css/bootstrap.min.css' %}'>
 
-
-  <title>Reminder</title>
+    <title>{% block content0 %}{% endblock %}</title>
 </head>
-<body class="margin_padding">
-        <main>
-            <header>
-                <nav>
-                    <ul style="  ist-style: none;margin: 2rem;padding: 0px;">
-{#                    <li style="  margin-left: 3rem;float: right;"><a href="{% url 'profile' user.id %}" >Profile</a></li>#}
-                    <li style="  margin-left: 3rem;float: right;"><a href="{% url 'search_result' %}">Search</a></li>
-                    <li style="  margin-left: 3rem;float: right;"><a href="{% url 'new_post' %}">New Post</a></li>
-                    </ul>
-                </nav>
-            </header>
-            <aside>
-                <button onclick="location.href='{% url 'login' %}'">Login</button>
-                <button onclick="location.href='{% url 'logout' %}'">Logout</button>
-                <button onclick="location.href='{% url 'user_register' %}'">Register</button>
-                {% block aside_content %}{% endblock %}
-            </aside>
-            {% block content %}
-            <section>
+<body style="height: 100%" class="margin_padding">
+<main style="height: 100%" class='background'>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        {% block header_content %}{% endblock %}
+    </nav>
+    <section>
+        {% block content %}
+        {% endblock %}
+    </section>
+    <script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
 
-            </section>
-            {% endblock %}
-            <footer>footer</footer>
-        </main>
+</main>
 </body>
 </html>
