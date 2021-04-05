@@ -1,75 +1,24 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
 {% load custom_tag_post %}
-{% load static %}{% block content0 %} Detail {% endblock %}
-{% block header_content %}
-    <img src="{% static "images/page/logo1.jpg" %}" width="100" height="100"
-         class="logo d-inline-block align-top">
-    <a class="link-header navbar-brand" style="color: #1F3847" href="#">Gasedak</a>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav" style="margin-left: 20%;">
-            <li class="li_nav nav-item active pe-5">
-                <a class="nav-link" style="color: #1F3847;" href="{% url "new_post" %}">NewPost</a>
-            </li>
-            <li class="li_nav nav-item pe-5 ">
-                <a class="nav-link" style="color: #1F3847" href="{% url "home" %}">Home</a>
-            </li>
-            <li class="li_nav nav-item li_post"><a class="nav-link" style="color: #1F3847"
-                                                   href="{% url "profile" user.id %}">profile</a></li>
-            <li class="li_nav nav-item pe-5 ">
-                <a class="nav-link" href="{% url "search_result" %}">
-                    <figure class="icon-search"></figure>
-                </a>
-            </li>
-        </ul>
-    </div>
-{% endblock %}
 {% block content %}
-    <link rel="stylesheet" type="text/css" href='{% static 'css/post/detail_post/detail_post.css' %}'>
-    <div class="card background_card">
-        <div class=" d-flex justify-content-around card-body" style=" margin: 3% 10% 3% 10%;">
-            <div class="container positions">
-                <div class="d-flex flex-column bd-highlight">
-                    <div class="bd-highlight">
-                        <ul class="ul_post">
-                            <li><h2>{{ post.title }}</h2>
-                                {% if profile.photo_profile != '' %}
-                                    {% if profile.photo_profile != None %}
-                                        <li><img src="{{ MEDIA_URL }}{{ post.picture }}" style="width: 25%;height: 15%">
-                                        </li>
-                                    {% endif %}
-                                {% endif %}
-                            {% if profile.content != ' ' %}
-                                <li>{{ post.content }}</li>
-                            {% endif %}
-                            <li><h6 class="initial">author: </h6>{{ post.author__email }}</li>
-                            <li><h6 class="initial">the lifespan of that post:</h6> {{ life_time }}</li>
-                            <li><h6 class="initial">like:</h6>{% count_like post.pk %}</li>
-                            <li>
-                                <button class="btn btn-primary"
-                                        onclick="location.href='{% url 'like_post' post.slug %}'">
-                                    like
-                                </button>
-                            </li>
-                            <li>{% comment_detail post.slug user %}</li>
-                        </ul>
-                    </div>
-                    <div class=" container">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col">
-                                    {% render_field form.comment type="text" style="width:20rem; height: 4rem;" id="text_input" class="form-control" placeholder="comment" %}
-                                </div>
-                                <div style="position: relative" class="col">
-                                    <button type="submit" class="btn btn-primary">Send</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <img style="width:40%" src="{% static "images/page/undraw_like_dislike_1dfj.svg" %}">
-        </div>
+    <div>
+        <ul>
+            <li><h2>{{ post.title }}</h2></li>
+            <li><img src="/image/{{ post.picture }}" style="width: 25%;height: 15%"></li>
+            <li>{{ post.content }}</li>
+            <li>author: {{ post.author__username }}</li>
+            <li>the lifespan of that post: {{ life_time }}</li>
+            <li>like: {% count_like post.pk %}</li>
+            <li>
+                <button onclick="{% like_post post.slug pk_login %}">like</button>
+            </li>
+            <li>{% comment_detail post.slug %}</li>
+        </ul>
+        <form method="post" action=" " style="margin-left: 33%;margin-top: -9%;">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <input type="submit" value="send">
+            <p>{{ message }}</p>
+        </form>
     </div>
 {% endblock %}

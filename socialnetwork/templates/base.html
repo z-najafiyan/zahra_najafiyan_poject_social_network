@@ -1,26 +1,31 @@
-{% load static %}
+{% load static%}
 <!DOCTYPE html>
-<html lang="en" class="background">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="zahra najafiyan">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/base/style.css' %}">
-    <link rel="stylesheet" type="text/css" href='{% static 'vendor/bootstrap/css/bootstrap.min.css' %}'>
+    <link rel="stylesheet" type="text/css" href="{% static 'base/style.css' %}">
 
-    <title>{% block content0 %}{% endblock %}</title>
+
+  <title>Reminder</title>
 </head>
-<body style="height: 100%" class="margin_padding">
-<main style="height: 100%" class='background'>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        {% block header_content %}{% endblock %}
-    </nav>
-    <section>
-        {% block content %}
-        {% endblock %}
-    </section>
-    <script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+<body class="margin_padding">
+        <main>
+            <header>
+            </header>
+            <aside>
+                <button onclick="location.href='{% url 'user_login' %}'">Login</button>
+{#                <button onclick="location.href='{% url 'user_logout' %}'">Logout</button>#}
+                <button onclick="location.href='{% url 'user_register' %}'">Register</button>
+                {% block aside_content %}{% endblock %}
+            </aside>
+            {% block content %}
+            <section>
 
-</main>
+            </section>
+            {% endblock %}
+            <footer>footer</footer>
+        </main>
 </body>
 </html>

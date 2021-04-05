@@ -12,7 +12,6 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="urllib.request" />
-          <option value="apps.blog.models.َAbstractBaseUser" />
         </list>
       </option>
     </inspection_tool>

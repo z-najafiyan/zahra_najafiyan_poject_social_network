@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&#vos!(&66rkyg1g5kw6#k@h7&z1vs#e!fml8(fb(t+#e_40(l'
+SECRET_KEY = '3w=2^7ut=9uh*e7=5v9$q2-wgl3nzj7)_)l&nw)oa^v106ne%u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,11 +38,7 @@ INSTALLED_APPS = [
     # my apps
     'apps.account',
     'apps.post',
-    'widget_tweaks',
-    'crispy_forms',
 ]
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,7 +63,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media',
             ],
         },
     },
@@ -108,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -120,31 +115,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-BOOTSTRAP3 = {
-    'css_url': STATIC_URL + 'vendor/bootstrap/css/bootstrap.min.css',
-    'javascript_url': STATIC_URL + 'vendor/bootstrap/js/bootstrap.min.js',
-}
-
 # Media
 # Base url to serve media files
-MEDIA_URL = '/media/'
-
+MEDIA_URL = '/image/'
 # Path where media is stored
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# message
-MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
-
-AUTH_USER_MODEL = 'account.User'
-
-LOGIN_REDIRECT_URL = 'home'
-
-LOGOUT_REDIRECT_URL = 'home'
-# Email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'address-email'
-EMAIL_HOST_PASSWORD = 'password-email'
-EMAIL_USE_TLS = True
-
-API_KEY = '4E6C5675635355324542504A496751456647685678694C64305458464F77567772534738534C522B4242633D'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'image')

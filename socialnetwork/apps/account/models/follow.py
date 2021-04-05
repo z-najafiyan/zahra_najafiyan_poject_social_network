@@ -1,6 +1,6 @@
 from django.db import models
 
-from socialnetwork.apps.account.managers import FollowManagers
+from apps.account.maneger import FollowManege
 
 
 class Follow(models.Model):
@@ -8,8 +8,7 @@ class Follow(models.Model):
     following = models.ForeignKey('account.User', related_name='user_following', on_delete=models.CASCADE,
                                   blank=True,
                                   null=True)
-
-    objects = FollowManagers()
+    objects = FollowManege()
 
     def __str__(self):
-        return 'user:{},following:{}'.format(str(self.user), str(self.following))
+        return 'user:{},following:{}'.format(str(self.user),str(self.following))

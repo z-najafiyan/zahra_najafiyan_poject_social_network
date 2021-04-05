@@ -1,22 +1,13 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
-from socialnetwork.apps.post.models import Comment
-from socialnetwork.apps.post.models.post import Post
+from apps.post.models import Comment
+from apps.post.models.post import Post
 
 
 class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'created_on', 'content', 'picture']
-
-    def clean(self):
-        cleaned_data = super().clean()
-        picture = cleaned_data.get('picture')
-        content = cleaned_data.get('content')
-        if picture == None and content == str():
-            raise ValidationError("Enter a picture or content")
-
+        fields = ['title', 'created_on', 'content', 'updated_on', 'status', 'picture']
 
 class CommentForm(forms.ModelForm):
     class Meta:

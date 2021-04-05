@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load custom_tag_account %}
+{% block content %}
+    <div>
+        <img src='/image/{{ author.author__photo_profile }}/' style="height:20%;width:15%;">
+        <h4>{{ author.author__username }}</h4>
+        <p><a href="{% url 'followers_list' author.author %}">followers</a>:{% count_followers author.author %}</p>
+        <p><a href="{% url 'following_list' author.author %}">following</a>:{% count_following author.author %}</p>
+        <button onclick="{% follow_user pk_login author.author %}">follow</button>
+        <table>
+            <tr>
+                <th>Post Title</th>
+                <th>Post Detail</th>
+            </tr>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td><a href="{% url 'detail_post' pk_login post.slug %}">Detail of post</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <p> Number of posts posted : {{ count }}</p>
+
+    </div>
+{% endblock %}

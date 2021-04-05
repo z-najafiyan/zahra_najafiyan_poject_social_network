@@ -1,17 +1,21 @@
+# Register your models here.
 from django.contrib import admin
 
-# sign up your models here.
-from socialnetwork.apps.account.models import User, Follow
+from apps.account.models.follow import Follow
+from apps.account.models.user import User
 
 
-@admin.register(Follow)
-class Followers(admin.ModelAdmin):
-    list_display = ['user', 'following']
-
-
+# class FollowInline(admin.TabularInline):
+#     model = Follow
+#     extra = 2
+#
+@admin.register((Follow))
+class Followuser(admin.ModelAdmin):
+    list_display = ['user','following']
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', "email"]
+    list_display = ['id', "username"]
     list_display_links = ['id']
+    fields = ['username', 'password', 'photo_profile', ]
     # readonly_fields = ['choose follow ']
     # inlines = (FollowInline,)

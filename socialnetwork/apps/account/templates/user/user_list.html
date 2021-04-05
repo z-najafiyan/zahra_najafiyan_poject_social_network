@@ -1,6 +1,5 @@
-<ul class="list-group list-group-flush">
+<ul>
     {% for user in users %}
-        <li class="list-group-item" style="background: linear-gradient(to left, #8EB8AC, #FED872);"><a class="a_link"
-                               href="{% url 'profile' user.pk %}">{{ user.first_name }} {{ user.last_name }}</a></li>
+        <li><a href="{% url 'profile' pk_login user.pk %}">{{ user.username }}</a></li>
     {% endfor %}
 </ul>

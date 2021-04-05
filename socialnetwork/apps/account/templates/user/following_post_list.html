@@ -1,8 +1,8 @@
-{#<ul>#}
-{#    {% for post in posts %}#}
-{#        <li>{{ post.author__email }}</li>#}
-{##}
-{#        <li><a href="{% url 'detail_post' post.title %}">{{ post.title }}</a></li>#}
-{##}
-{#    {% endfor %}#}
-{#</ul>#}
+<ul>
+    {% for post in posts %}
+        <li>{{ post.author__username }}</li>
+
+        <li><a href="{% url 'detail_post' pk_login post.title %}">{{ post.title }}</a></li>
+
+    {% endfor %}
+</ul>
