@@ -5,7 +5,7 @@ from django.utils.timezone import now
 
 
 class PostManege(models.Manager):
-    def lif_time(self, time):
+    def life_time(self, time):
         lifetime = (now() - time).total_seconds()
 
         hour = lifetime / 3600

@@ -1,8 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from socialnetwork.apps.post.models import Comment
-from socialnetwork.apps.post.models.post import Post
+from apps.post.models import Comment
+from apps.post.models.post import Post
 
 
 class NewPostForm(forms.ModelForm):

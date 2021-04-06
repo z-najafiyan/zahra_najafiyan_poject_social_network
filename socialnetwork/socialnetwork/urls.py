@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
-from socialnetwork.apps.account.views import SignIn, SignUp, change_password, ActivateView, CheckActivationCode, \
+from apps.account.views import SignIn, SignUp, change_password, ActivateView, CheckActivationCode, \
     logout_view, HomePage, EditCompleteUser
 from socialnetwork import settings
 

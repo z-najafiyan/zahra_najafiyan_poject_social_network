@@ -17,12 +17,12 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, UpdateView
 
-from socialnetwork.apps.account.forms import SearchUserForm, UserUpdateForm, LoginUserForm, \
+from apps.account.forms import SearchUserForm, UserUpdateForm, LoginUserForm, \
     SignUpUserForm, ActivateUserWithPhoneNumber
-from socialnetwork.apps.account.models import User, Follow, RequestFollow
-from socialnetwork.apps.account.tokens import account_activation_token
-from socialnetwork.apps.post.models import Post, Comment
-from socialnetwork.common.sms import kave_negar_token_send
+from apps.account.models import User, Follow, RequestFollow
+from apps.account.tokens import account_activation_token
+from apps.post.models import Post, Comment
+from common.sms import kave_negar_token_send
 
 
 class SignUp(View):

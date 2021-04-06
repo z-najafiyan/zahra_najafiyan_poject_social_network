@@ -1,6 +1,6 @@
 from django.db import models
 
-from socialnetwork.apps.post.maneger import CommentManager
+from apps.post.managers import CommentManager
 
 
 class Comment(models.Model):

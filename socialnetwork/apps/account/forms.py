@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.forms import PasswordInput
 
-from socialnetwork.apps.account.models import User
+from apps.account.models import User
 
 
 class SignUpUserForm(UserCreationForm):

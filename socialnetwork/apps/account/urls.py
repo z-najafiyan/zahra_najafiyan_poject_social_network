@@ -1,6 +1,6 @@
 from django.urls import path
 
-from socialnetwork.apps.account.views import UserListSearch, FollowingList, FollowersList, ProfileUser, \
+from apps.account.views import UserListSearch, FollowingList, FollowersList, ProfileUser, \
     ListRequest, AcceptRequest, DeleteRequest, SendRequestFollow
 
 urlpatterns = [

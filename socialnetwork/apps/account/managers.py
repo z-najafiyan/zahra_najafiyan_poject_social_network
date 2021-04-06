@@ -47,8 +47,8 @@ class RequestManagers(models.Manager):
         :param pk_other_user:
         :return: message
         """
-        from socialnetwork.apps.account.models import Follow
-        from socialnetwork.apps.account.models import User
+        from apps.account.models import Follow
+        from apps.account.models import User
         login_user = User.objects.get(pk=pk_user_login)
         other_user = User.objects.get(pk=pk_other_user)
 
@@ -68,8 +68,8 @@ class RequestManagers(models.Manager):
             return message
 
     def accept_request(self, pk_user_login, pk_other_user):
-        from socialnetwork.apps.account.models import User
-        from socialnetwork.apps.account.models import Follow
+        from apps.account.models import User
+        from apps.account.models import Follow
         login_user = User.objects.get(pk=pk_user_login)
         other_user = User.objects.get(pk=pk_other_user)
         request = self.filter(Q(request_user=pk_user_login) & Q(request_follow=pk_other_user))

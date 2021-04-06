@@ -1,6 +1,6 @@
 from django.urls import path
 
-from socialnetwork.apps.post.views import NewPost, DetailPostAuthor, UpdatePost, DeletePost, DeleteComment, LikePost, LikePost1
+from apps.post.views import NewPost, DetailPostAuthor, UpdatePost, DeletePost, DeleteComment, LikePost, LikePost1
 
 urlpatterns = [
     path('new_post/', NewPost.as_view(), name='new_post'),

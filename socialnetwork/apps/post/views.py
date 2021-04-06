@@ -5,9 +5,9 @@ from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import UpdateView
 
-from socialnetwork.apps.account.models import User
-from socialnetwork.apps.post.forms import NewPostForm, CommentForm
-from socialnetwork.apps.post.models import Post, Comment
+from apps.account.models import User
+from apps.post.forms import NewPostForm, CommentForm
+from apps.post.models import Post, Comment
 
 
 class NewPost(LoginRequiredMixin, View):

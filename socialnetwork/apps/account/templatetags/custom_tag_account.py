@@ -1,7 +1,7 @@
 from django import template
 
-from socialnetwork.apps.account.models import User, Follow, RequestFollow
-from socialnetwork.apps.post.models import Post
+from apps.account.models import User, Follow, RequestFollow
+from apps.post.models import Post
 
 register = template.Library()
 

@@ -1,18 +1,18 @@
 # Create your models here.
 
 from django.db import models
+from django.utils import timezone
 from django_extensions.db.fields import AutoSlugField
 
-# from apps.post.maneger import PostManege
-from socialnetwork.apps.post.maneger import PostManege
-from socialnetwork.apps.post.models.comment import Comment
+from apps.post.managers import PostManege
+from apps.post.models.comment import Comment
 
 
 
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = AutoSlugField(populate_from=['title'], unique=True)
-    created_on = models.DateTimeField()
+    created_on = models.DateTimeField(default=timezone.now())
     content = models.TextField(blank=True, null=True)
     author = models.ForeignKey('account.User', on_delete=models.DO_NOTHING)
     updated_on = models.DateTimeField(blank=True, null=True)

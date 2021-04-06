@@ -3,8 +3,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from socialnetwork.apps.account.managers import UserManagers
-from socialnetwork.common.validators import user_name_validator, name_validation
+from apps.account.managers import UserManagers
+from common.validators import user_name_validator, name_validation
 
 
 class User(AbstractBaseUser, PermissionsMixin):

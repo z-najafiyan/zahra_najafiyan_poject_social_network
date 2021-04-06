@@ -39,10 +39,8 @@ INSTALLED_APPS = [
     'apps.account',
     'apps.post',
     'widget_tweaks',
-    'crispy_forms',
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -108,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -143,8 +141,8 @@ LOGOUT_REDIRECT_URL = 'home'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'address-email'
-EMAIL_HOST_PASSWORD = 'password-email'
+EMAIL_HOST_USER = '213.najafiyan@gmail.com'
+EMAIL_HOST_PASSWORD = 'z213Z213@'
 EMAIL_USE_TLS = True
 
 API_KEY = '4E6C5675635355324542504A496751456647685678694C64305458464F77567772534738534C522B4242633D'
